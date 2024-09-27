@@ -10,11 +10,11 @@ class UserOrm(Base):
     __tablename__ = 'Users'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    birth_date: Mapped[str] = mapped_column(String, unique=True)
+    birth_date: Mapped[str] = mapped_column(String)
     fullname: Mapped[str] = mapped_column(String)
     tematics: Mapped[list] = mapped_column(ARRAY(String), nullable=True)  # Используем ARRAY для хранения списка строк
     region: Mapped[str] = mapped_column(String, nullable=True)
-    password: Mapped[str] = mapped_column(String, nullable=True)
+    password: Mapped[str] = mapped_column(String)
 
 class VideosORM(Base):
     
@@ -24,5 +24,7 @@ class VideosORM(Base):
     author_id: Mapped[int] 
     category: Mapped[str]
     created_date: Mapped[datetime.datetime]
+    likes_count: Mapped[int]
+    dislike_count: Mapped[int]
 
 

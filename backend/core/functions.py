@@ -30,19 +30,21 @@ async def new_user(data:UserOrm):
 
 
 # создание таска
-async def new_video(task_data:VideosORM):
+async def new_video(video_data:VideosORM):
     async with async_session_factory() as session:
-        session.add(task_data)
+        session.add(video_data)
         await session.commit()
     return 'Задача создана'
 
 
 
-async def get_user(id:int) -> UserOrm:
+async def get_user(id:int) -> dict:
     async with async_session_factory() as session:
         result = await session.execute(select(UserOrm).filter_by(id=id))
         user = result.scalar_one_or_none()
-        return user
+        res = {'birth_date': user.birth_datem, 'fullname': user.fullname, "tematics":user.tematics, 'region': user.region, 'password': user.password}
+    
+        return res
         
 
 
@@ -57,3 +59,21 @@ async def update_password(id:str, new_pass:str):
     return 'Пароль изменён'
 
 
+async def update_dislike(id:int, dis:int):
+    async with async_session_factory() as session:
+        result = await session.execute(select(VideosORM).filter_by(id=id))
+        video = result.scalar_one_or_none()
+        if video:
+            video.dislike_count += dis
+            await session.commit()
+    return 'колличество дизлайков изменено'
+
+
+async def update_like(id:int, lik:int):
+    async with async_session_factory() as session:
+        result = await session.execute(select(VideosORM).filter_by(id=id))
+        video = result.scalar_one_or_none()
+        if video:
+            video.likes_count += lik
+            await session.commit()
+    return 'колличество дизлайков изменено'

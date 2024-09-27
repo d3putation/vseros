@@ -18,7 +18,7 @@ from fastapi import FastAPI
 #     drop_tables()
 #     return {"message": "Таблицы удалены"}
 
-
+drop_tables()
 create_tables()
 
 # добавление юзера

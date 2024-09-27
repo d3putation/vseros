@@ -15,6 +15,8 @@ class Video(BaseModel):
     author_id: int
     category: str
     date_create: datetime.datetime
+    like_count: int
+    dislike_count: int
 
 
 

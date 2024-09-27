@@ -32,6 +32,8 @@ videos_table = Table(
     Column('author_id', Integer),
     Column('category', String),
     Column('created_date', String),
+    Column('likes_count', Integer),
+    Column('dislike_count', Integer),
 )
 
 
