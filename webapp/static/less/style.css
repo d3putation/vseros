@@ -11,7 +11,7 @@ body {
   width: 100%;
   height: 100%;
   padding: 5% 1% 4%;
-  background-color: #1b232b;
+  background-color: #1B232B;
   text-align: center;
 }
 .logo {
@@ -25,20 +25,20 @@ body {
   max-width: 60%;
   transform: translateY(-5%);
   font-size: 3.5rem;
-  color: #ffffff;
+  color: #fff;
 }
 .content {
   display: inline-block;
   padding: 2% 0 0;
   width: 80%;
   height: 88%;
-  background-color: #14191f;
+  background-color: #14191F;
   border-radius: 20px;
 }
 .slider-header p {
   font-size: 3rem;
   font-weight: 200;
-  color: #ffffff;
+  color: #fff;
 }
 @media (max-width: 1100px) {
   .header h1 {
