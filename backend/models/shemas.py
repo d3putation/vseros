@@ -10,7 +10,7 @@ class User(BaseModel):
     password:str
 
 
-class Task(BaseModel):
+class Video(BaseModel):
     name: str 
     author_id: int
     category: str
