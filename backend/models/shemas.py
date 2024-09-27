@@ -3,16 +3,18 @@ import datetime
 
 
 class User(BaseModel):
-    tg_id: str
+    birth_date: datetime.datetime
     fullname: str
-    tasks_id: list
-    password: str
-    vs:str
+    tematics: list
+    region: str
+    password:str
 
 
 class Task(BaseModel):
-    owner_tg_id: str
-    owner_fullname: str
-    task_text: str
+    name: str 
+    author_id: int
+    category: str
     date_create: datetime.datetime
-    diedline: datetime.datetime
+
+
+

@@ -24,7 +24,15 @@ users_table  = Table(
 )
 
 
-
+videos_table = Table(
+    'Videos',
+    metadata_obj,
+    Column('id', Integer, primary_key=True),
+    Column('name', String),
+    Column('author_id', Integer),
+    Column('category', String),
+    Column('created_date', String),
+)
 
 
 
