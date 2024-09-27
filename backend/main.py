@@ -1,6 +1,7 @@
-from core.functions import *
+from func.functions import *
 from fastapi import FastAPI
-
+from fastapi import FastAPI
+from routers.api import router as api_router
 
 
 # app = FastAPI()
@@ -42,6 +43,15 @@ create_tables()
 # asyncio.run(new_userOrm(data=data))
 # создание пользователя по уёбск(но мы так и будем делать )
 
+
+
+app = FastAPI()
+
+app.include_router(api_router, prefix="/api")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
 
