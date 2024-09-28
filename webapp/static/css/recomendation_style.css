@@ -1,3 +1,4 @@
+/* Добавление шрифта */
 @font-face {
   font-family: 'Alumni Sans';
   src: url('../font/AlumniSans-Italic.woff2') format('woff2'),
@@ -52,13 +53,13 @@
   background-color: #14191f;
   border-radius: 20px;
 }
+/* Настройка блока с видео */
 .rec {
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content: space-around;
-  flex-direction: row;
   flex: 1;
   margin-bottom: 2rem;
   padding: 2% 0 0;
@@ -67,16 +68,16 @@
   background-color: #14191f;
   border-radius: 20px;
 }
+/* Настройка самих видео */
 .video {
   margin: 1rem 2rem;
   font-family: 'Alumni Sans', sans serif;;
   width: 500px;
   flex-grow: 1;
-  /* min-width: calc(100%/4 - 4rem); */
-  /* height: 15vh; */
-  /* height: calc(100%/3 - 2rem); */
+  width: calc(100% / 5);
   background-color: #fff;
 }
+/* Настройка кнопки обновления рекомендаций */
 .refresh {
   width: 10rem;
   height: 3rem;
@@ -85,10 +86,9 @@
   background-color: #00a1e7;
   border: none;
   border-radius: 10px;
-  /* box-shadow: -3px -3px 4px rgba(0, 161, 231, 0.5); */
 }
-.refresh:hover {    
-  box-shadow: 3px 3px 3px 4px white
-              -3px -3px 3px 4px white;
+.refresh:hover {
+  z-index: 999;
+  box-shadow: 0 0 7px 4px rgba(0, 161, 231, 0.5);
 }
 

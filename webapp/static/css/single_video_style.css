@@ -6,7 +6,7 @@
     font-style: italic;
     font-display: swap;
 }
-
+ 
 /* Основные размеры и падинги сайта */
 .main {
     display: flex;
@@ -29,17 +29,24 @@
     top: 5px;
     left: 20px;
 }
-/* Основная разметка блока с контентом */
-.content {
+.main-content {
     flex: 1;
     display: flex;
-    flex-flow: column;
-    flex-wrap: wrap;  
     padding: 2% 2% 4%; 
     width: 100%;
     background-color: #14191f;
     border-radius: 20px;
 }
+/* Основная разметка блока с контентом */
+.content {
+    /* flex: 1; */
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    width: 80%;
+    background-color: #14191f;
+}
+/* Разметка видео */
 .video {
     width: 100%;
     /* height: 94%; */
@@ -48,14 +55,16 @@
     vertical-align: middle;
     background-color: #fff;
 }
-.author-and-grade {
+.category-and-grade {
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
-    height: 3rem;
+    height: 5rem;
     align-items: center;
-    border: 1px solid red;
 }
-.author {
+.category {
+    margin-right: 5rem;
+    font-size: 2rem;
     color: white;
 }
 .grade {
@@ -70,4 +79,16 @@
 .comment {
     width: 30%;
     height: 5rem;
+}
+
+.like {
+    margin-right: 2rem;
+}
+
+.description {
+    display: flex;
+    height: 5rem;
+    font-family: 'Alumni Sans', sans-serif;
+    font-size: 2rem;
+    align-items: center;
 }
