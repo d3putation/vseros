@@ -57,6 +57,18 @@ services:
       db:
         condition: service_healthy
 
+  webapp:
+    container_name: webapp
+    hostname: webapp
+    image: webapp:1.0.0
+    restart: on-failure
+    build:
+      context: ./webapp
+      dockerfile: webapp.dockerfile
+    ports:
+      - 5555:5555
+    
+
 
 volumes:
   pgdata:

@@ -16,7 +16,7 @@ def get_latest_id():
     return str(time.time())
 
 def add_user(id):
-    requests.post("http://backend:8000/users/new_user", params=id)
+    requests.post("http://backend:8000/users/new_user", params={"data": id})
 
 @app.route("/")
 def startpage():
