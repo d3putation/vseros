@@ -1,6 +1,8 @@
 from func.functions import *
 from fastapi import FastAPI
-from fastapi import FastAPI
+import asyncio
+from models.orm import *
+from routers.routs import router
 # from routers.api import router as api_router
 
 
@@ -19,8 +21,7 @@ from fastapi import FastAPI
 #     drop_tables()
 #     return {"message": "Таблицы удалены"}
 
-drop_tables()
-create_tables()
+
 
 # добавление юзера
 # tasks = ['12', '21', '42']
@@ -31,8 +32,13 @@ create_tables()
 
 
 
+app = FastAPI()
 
+app.include_router(router, prefix="/users", tags=["users"])
 
+@app.get("/")
+async def root():
+    return {"message": "Hello, FastAPI with APIRouter!"}
 
 
 #создание таска
