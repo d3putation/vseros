@@ -1,6 +1,6 @@
 from func.functions import *
 from fastapi import FastAPI
-import asyncio
+import asyncio, uvicorn
 from models.orm import *
 from routers.routs import router
 # from routers.api import router as api_router
@@ -30,7 +30,7 @@ from routers.routs import router
 
 # asyncio.run(new_user(new_user_data))
 
-
+from config import BACKEND_PORT, BACKEND_HOST
 
 app = FastAPI()
 
@@ -40,7 +40,9 @@ app.include_router(router, prefix="/users", tags=["users"])
 async def root():
     return {"message": "Hello, FastAPI with APIRouter!"}
 
-
+if __name__ == '__main__':
+    create_tables()
+    uvicorn.run("main:app", reload=True, host=BACKEND_HOST, port=int(BACKEND_PORT))
 #создание таска
 # new_task_data = Task(owner_tg_id='asd', owner_fullname='sadas', task_text='купить подарок начальнику', date_create='2024-09-19', diedline='2024-09-25')
 # new_task(new_task_data)

@@ -1,12 +1,12 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import Session, sessionmaker, DeclarativeBase
 from sqlalchemy import URL, create_engine, text, MetaData
-from config import settings
+from config import *
 
 
 
 async_engine = create_async_engine(
-    url=settings.DATABASE_URL_asyncpg,
+    url=f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{5432}/{DB_NAME}",
     echo=True,
 )
 
@@ -20,7 +20,7 @@ class Base(DeclarativeBase):
 
     
 engine = create_engine(
-    url= settings.DATABASE_URL_psycopg,
+    url= f"postgresql+psycopg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{5432}/{DB_NAME}",
     echo=True,
     # pool_size=5,
     # max_overflow=10,

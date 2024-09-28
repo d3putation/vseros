@@ -1,0 +1,63 @@
+services:
+  backend:
+    container_name: backend
+    hostname: backend
+    image: backend:1.0.0
+    restart: on-failure
+    build:
+      context: ./backend
+      dockerfile: backend.dockerfile
+    environment:
+      ETHEREUM_RPC_URL: ${ETHEREUM_RPC_URL}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: db
+      BACKEND_HOST: backend
+      BACKEND_PORT: ${BACKEND_PORT}
+      
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    container_name: db
+    image: postgres:14.11-alpine3.19
+    restart: on-failure
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./.env:/docker-entrypoint-initdb.d/.env  # Монтируем .env в контейнер ???
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  pgadmin:
+    image: dpage/pgadmin4:8.9
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_PORT}
+    ports:
+      - ${PGADMIN_PORT}:${PGADMIN_PORT}
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+volumes:
+  pgdata:
+  pgadmin:
