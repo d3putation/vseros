@@ -15,16 +15,5 @@ class UserOrm(Base):
     tematics: Mapped[list] = mapped_column(ARRAY(String), nullable=True)  # Используем ARRAY для хранения списка строк
     region: Mapped[str] = mapped_column(String, nullable=True)
     password: Mapped[str] = mapped_column(String)
-
-class VideosORM(Base):
-    
-    __tablename__ = 'Videos'
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(unique=True)
-    author_id: Mapped[int] 
-    category: Mapped[str]
-    created_date: Mapped[datetime.datetime]
-    likes_count: Mapped[int]
-    dislike_count: Mapped[int]
-
+    liked_videos: Mapped[list] = mapped_column(ARRAY(String), nullable=True)
 

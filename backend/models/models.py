@@ -20,22 +20,5 @@ users_table  = Table(
     Column('tematics', ARRAY(String)),
     Column('region', String),
     Column('password', String),
-    
+    Column('liked_videos', ARRAY(String)),
 )
-
-
-videos_table = Table(
-    'Videos',
-    metadata_obj,
-    Column('id', Integer, primary_key=True),
-    Column('name', String),
-    Column('author_id', Integer),
-    Column('category', String),
-    Column('created_date', String),
-    Column('likes_count', Integer),
-    Column('dislike_count', Integer),
-)
-
-
-
-

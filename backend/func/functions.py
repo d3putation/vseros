@@ -1,8 +1,8 @@
 from sqlalchemy import text, insert, select, update
 from engines import async_engine, async_session_factory, Base,engine
-from models.models import  metadata_obj, videos_table, users_table
-from models.shemas import Video, User
-from models.orm import UserOrm, VideosORM
+from models.models import  metadata_obj, users_table
+from models.shemas import  User
+from models.orm import UserOrm
 
 
 # def create_tables():
@@ -29,12 +29,6 @@ async def new_user(data:UserOrm):
     
 
 
-# создание таска
-async def new_video(video_data:VideosORM):
-    async with async_session_factory() as session:
-        session.add(video_data)
-        await session.commit()
-    return 'Задача создана'
 
 
 
@@ -58,22 +52,3 @@ async def update_password(id:str, new_pass:str):
             await session.commit()
     return 'Пароль изменён'
 
-
-async def update_dislike(id:int, dis:int):
-    async with async_session_factory() as session:
-        result = await session.execute(select(VideosORM).filter_by(id=id))
-        video = result.scalar_one_or_none()
-        if video:
-            video.dislike_count += dis
-            await session.commit()
-    return 'колличество дизлайков изменено'
-
-
-async def update_like(id:int, lik:int):
-    async with async_session_factory() as session:
-        result = await session.execute(select(VideosORM).filter_by(id=id))
-        video = result.scalar_one_or_none()
-        if video:
-            video.likes_count += lik
-            await session.commit()
-    return 'колличество дизлайков изменено'
