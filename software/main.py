@@ -7,7 +7,6 @@ import json
 import os
 from sklearn.preprocessing import LabelEncoder
 
-
 # Параметры устройства
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -124,96 +123,59 @@ def recommend_video(user_preferences):
         recommended_video_id = video_encoder.inverse_transform(recommended_video.argmax(dim=1).cpu().numpy())
         return recommended_video_id[0]
 
+# Основной цикл взаимодействия с пользователями
+while True:
+    user_id = input("Введите ваш user_id (или 'exit' для выхода): ")
+    if user_id == 'exit':
+        break
 
-
-
-# Assuming video_data and the trained model are already loaded and available in your environment
-
-def load_user_data(user_id):
-    """Load user data from JSON or initialize a new structure if not found."""
-    try:
-        with open('user_data.json', 'r') as f:
-            all_user_data = json.load(f)
-        return all_user_data.get(user_id, {"liked_videos": [], "favorite_category": None, "disliked_categories": set()})
-    except (FileNotFoundError, json.JSONDecodeError):
-        # Return default if no data is available
-        return {"liked_videos": [], "favorite_category": None, "disliked_categories": set()}
-
-def save_user_data(user_id, user_data):
-    """Save user data to JSON, adding it to the existing data."""
-    try:
-        with open('user_data.json', 'r') as f:
-            all_user_data = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        all_user_data = {}
-    
-    all_user_data[user_id] = user_data
-
-    with open('user_data.json', 'w') as f:
-        # Convert sets to lists for JSON serialization
-        all_user_data_serializable = {uid: {
-            "liked_videos": [str(vid) for vid in data["liked_videos"]],
-            "favorite_category": str(data["favorite_category"]) if data["favorite_category"] else None,
-            "disliked_categories": list(data["disliked_categories"])
-        } for uid, data in all_user_data.items()}
-        json.dump(all_user_data_serializable, f)
-
-def recommend_video(user_preferences):
-    """Recommend a video based on user preferences using the trained model."""
-    model.eval()
-    with torch.no_grad():
-        encoded_preferences = video_encoder.transform(user_preferences)
-        user_sequence = torch.tensor(encoded_preferences).unsqueeze(0).to(device)
-        recommended_video = model(user_sequence)
-        recommended_video_id = video_encoder.inverse_transform(recommended_video.argmax(dim=1).cpu().numpy())
-        return recommended_video_id[0]
-
-def get_recommendation(user_id, current_video_id=None, reaction=None):
-    """
-    Get a recommendation based on user feedback.
-    
-    Parameters:
-    - user_id (str): The ID of the user.
-    - current_video_id (str, optional): The ID of the current video.
-    - reaction (str, optional): The user's reaction to the current video ('like', 'dislike').
-
-    Returns:
-    - str: The recommended video ID.
-    """
-    # Load the user data or initialize it if not found
     user_data = load_user_data(user_id)
 
-    # Update user data based on the reaction to the current video
-    if reaction == "like" and current_video_id:
-        user_data["liked_videos"].append(current_video_id)
-        video_info = video_data[video_data['video_id'] == current_video_id].iloc[0]
-        user_data["favorite_category"] = video_info['category_id']
-    elif reaction == "dislike" and current_video_id:
-        video_info = video_data[video_data['video_id'] == current_video_id].iloc[0]
-        user_data["disliked_categories"].add(video_info['category_id'])
-    
-    # Save updated user data
-    save_user_data(user_id, user_data)
-    
-    # Recommend a video
-    if not user_data["liked_videos"]:
-        random_video_id = random.choice(video_data['video_id'].tolist())
-    else:
-        random_video_id = recommend_video(user_data["liked_videos"])
-
-    video_info = video_data[video_data['video_id'] == random_video_id].iloc[0]
-    video_category = video_info['category_id']
-
-    # Handle disliked categories
-    if video_category in user_data["disliked_categories"]:
-        alternative_videos = video_data[~video_data['category_id'].isin(user_data["disliked_categories"])]
-        if not alternative_videos.empty:
-            random_video_id = random.choice(alternative_videos['video_id'].tolist())
+    while True:
+        if not user_data["liked_videos"]:
+            random_video_id = random.choice(video_data['video_id'].tolist())  # Используйте оригинальные ID видео
         else:
-            available_disliked_videos = video_data[video_data['category_id'].isin(user_data["disliked_categories"])]
-            if not available_disliked_videos.empty:
-                random_video_id = random.choice(available_disliked_videos['video_id'].tolist())
-            else:
-                return None  # No available videos
+            random_video_id = recommend_video(user_data["liked_videos"])
+        
+        # Получение информации о видео
+        video_info = video_data[video_data['video_id'] == random_video_id].iloc[0]  # Поиск по оригинальному ID
+        video_category = video_info['category_id']  # Получите категорию видео
 
-    return random_video_id
+        # Проверка на нежелательные категории
+        if video_category in user_data["disliked_categories"]:
+            print(f"Рекомендуемое видео ID {random_video_id} относится к нежелательной категории.")
+            
+            # Попытка найти видео из другой категории
+            alternative_videos = video_data[~video_data['category_id'].isin(user_data["disliked_categories"])]
+            
+            if not alternative_videos.empty:
+                random_video_id = random.choice(alternative_videos['video_id'].tolist())
+                video_info = alternative_videos[alternative_videos['video_id'] == random_video_id].iloc[0]
+                print(f"Рекомендуемое видео ID: {video_info['video_id']}, Заголовок: {video_info['title']}, Описание: {video_info['description']}")
+            else:
+                print("Нет доступных видео из других категорий. Рекомендуем из непривлекательных категорий.")
+
+                available_disliked_videos = video_data[video_data['category_id'].isin(user_data["disliked_categories"])]
+                if not available_disliked_videos.empty:
+                    random_video_id = random.choice(available_disliked_videos['video_id'].tolist())
+                    video_info = available_disliked_videos[available_disliked_videos['video_id'] == random_video_id].iloc[0]
+                    print(f"Рекомендуемое видео ID: {video_info['video_id']}, Заголовок: {video_info['title']}, Описание: {video_info['description']}")
+                else:
+                    print("Нет доступных видео из непривлекательных категорий. Попробуйте снова.")
+                    continue  # Если нет доступных видео, продолжаем цикл
+        else:
+            print(f"Рекомендуемое видео ID: {video_info['video_id']}, Заголовок: {video_info['title']}, Описание: {video_info['description']}")
+        
+        # Запрос реакции пользователя
+        user_input = input("Введите 'like' для лайка, 'dislike' для дизлайка (или 'exit' для выхода): ")
+        if user_input == "like":
+            user_data["liked_videos"].append(video_info['video_id'])
+            user_data["favorite_category"] = video_info['category_id']
+        elif user_input == "dislike":
+            user_data["disliked_categories"].add(video_category)
+            print(f"Категория '{video_category}' добавлена в список непривлекательных.")
+            continue
+        elif user_input == "exit":
+            break
+
+        save_user_data(user_id, user_data)
