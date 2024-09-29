@@ -1,4 +1,5 @@
 flask
+flask-ngrok
 flask-session
 requests
 torch
