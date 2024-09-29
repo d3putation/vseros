@@ -1,3 +1,4 @@
+/* Добавление шрифта */
 @font-face {
     font-family: 'Alumni Sans';
     src: url('../font/AlumniSans-Italic.woff2') format('woff2'),
@@ -6,14 +7,13 @@
     font-style: italic;
     font-display: swap;
 }
-
 /* Основные размеры и падинги сайта */
 .main {
     display: flex;
     flex-direction: column;
     width: 100%;
     min-height: 100vh;
-    padding: 1% 1% 4%;
+    padding: 2% 3%;
     background-color: #1b232b;
 }
 /* Хедер сайта */
@@ -29,33 +29,42 @@
     top: 5px;
     left: 20px;
 }
-/* Основная разметка блока с контентом */
-.content {
+.main-content {
     flex: 1;
     display: flex;
-    flex-flow: column;
-    flex-wrap: wrap;  
     padding: 2% 2% 4%; 
     width: 100%;
     background-color: #14191f;
     border-radius: 20px;
 }
+/* Основная разметка блока с контентом */
+.content {
+    /* flex: 1; */
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    width: 80%;
+    background-color: #14191f;
+}
+/* Разметка видео */
 .video {
     width: 100%;
-    /* height: 94%; */
     flex: 1;
     text-align: center;
     vertical-align: middle;
     background-color: #fff;
+    border-radius: 10px;
 }
-.author-and-grade {
+.category-and-grade {
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
-    height: 3rem;
+    height: 5rem;
     align-items: center;
-    border: 1px solid red;
 }
-.author {
+.category {
+    margin-right: 5rem;
+    font-size: 2rem;
     color: white;
 }
 .grade {
@@ -65,9 +74,20 @@
     height: 3rem;
     align-items: center;
     color: white;
-    border: 1px solid red;
 }
 .comment {
     width: 30%;
     height: 5rem;
+}
+
+.like {
+    margin-right: 2rem;
+}
+
+.description {
+    display: flex;
+    height: 5rem;
+    font-family: 'Alumni Sans', sans-serif;
+    font-size: 2rem;
+    align-items: center;
 }

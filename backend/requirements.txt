@@ -8,3 +8,4 @@ psycopg-binary
 pydantic
 pydantic-settings
 uvicorn
+requests
