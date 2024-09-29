@@ -1,0 +1,11 @@
+@media (max-width: 1429px) {
+    .header h1 {
+        font-size: 1.7rem;
+    }
+}
+@media (max-width: 1346px) {
+    .video {
+        width: calc(100% / 3 - 4rem);
+        /* height: 7rem; */
+    }
+}

@@ -1,1 +1,6 @@
 .venv/
+video_recommendation_model.pth
+video_stat.parquet
+logs_df_2024-08-06.parquet
+logs_df_2024-08-05.parquet
+flask_session/

@@ -1,3 +1,9 @@
 flask
+flask-ngrok
 flask-session
 requests
+torch
+pandas
+scikit-learn
+pyarrow
+fastparquet

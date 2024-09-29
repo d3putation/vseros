@@ -3,83 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
     <link rel="stylesheet" href="../static/css/recomendation_style.css">
+    <link rel="stylesheet" href="../static/css/recomendation_media_style.css">
     <script src="../static/js/jquery-3.7.1.js"></script>
-    <script src="../static/js/main.js"></script>
+    <script src="{{ url_for('static',filename='js/recomendation_main.js') }}"></script>
+    
     <title>Cold start</title>
 </head>
 <body>
-
     <!-- Весь экран -->
-    <main class="main">
-        <!-- Логотип -->
-        
+    <main class="main">        
         <!-- Хедер сайта -->
-         
         <div class="header">
+            <!-- Логотип -->
             <div class="logo">
                 <img src="../static/img/rutube_logo.png" width="100%" alt="Логотип rutube">
             </div>
+            <!-- Огловление страницы -->
             <h1>Рекомендательная система для новых пользователей<br>Добро пожаловать!</h1>
         </div>
-        <!-- Блок с основным контейнером (слайдер) -->
-
+        <!-- Блок со всем контентом -->
         <div class="content">
+            <!-- Блок с рекомендуемыми видео -->
             <div class="rec">
-                <div class="video">
-                    <p class="name">Название</p>
-                    <p class="description">Описание</p>
-                    <p class="author">Автор</p>
+                
+                {%for i in range 10%}
+                <div class="video" id="{{ids[i]}}">
+                    <p class="name">{{names[i]}}</p>
+                    <p class="category">{{categories[i]}}</p>
+                    <p class="description">{{descriptions[i]}}</p>
                 </div>
-                <div class="video">
+                {%endfor%}
+                <!-- <div class="video vid1" id="#">
                     <p class="name">Название</p>
+                    <p class="category">Категория</p>
                     <p class="description">Описание</p>
-                    <p class="author">Автор</p>
                 </div>
-                <div class="video">
+                <div class="video vid2" id="#">
                     <p class="name">Название</p>
+                    <p class="category">Категория</p>
                     <p class="description">Описание</p>
-                    <p class="author">Автор</p>
                 </div>
-                <div class="video">
+                <div class="video vid3" id="#">
                     <p class="name">Название</p>
+                    <p class="category">Категория</p>
                     <p class="description">Описание</p>
-                    <p class="author">Автор</p>
                 </div>
-                <div class="video">
+                <div class="video vid4" id="#">
                     <p class="name">Название</p>
+                    <p class="category">Категория</p>
                     <p class="description">Описание</p>
-                    <p class="author">Автор</p>
                 </div>
-                <div class="video">
+                <div class="video vid5" id="#">
                     <p class="name">Название</p>
+                    <p class="category">Категория</p>
                     <p class="description">Описание</p>
-                    <p class="author">Автор</p>
                 </div>
-                <div class="video">
+                <div class="video vid6" id="#">
                     <p class="name">Название</p>
+                    <p class="category">Категория</p>
                     <p class="description">Описание</p>
-                    <p class="author">Автор</p>
                 </div>
-                <div class="video">
+                <div class="video vid7" id="#">
                     <p class="name">Название</p>
+                    <p class="category">Категория</p>
                     <p class="description">Описание</p>
-                    <p class="author">Автор</p>
                 </div>
-                <div class="video">
+                <div class="video vid8" id="#">
                     <p class="name">Название</p>
+                    <p class="category">Категория</p>
                     <p class="description">Описание</p>
-                    <p class="author">Автор</p>
                 </div>
-                <div class="video">
+                <div class="video vid9" id="#">
                     <p class="name">Название</p>
+                    <p class="category">Категория</p>
                     <p class="description">Описание</p>
-                    <p class="author">Автор</p>
-                </div>
+                </div> -->
 
             </div>            
-
+            <!-- Кнопка обновления рекомендаций -->
             <div class="refresh-btn">
                 <button class="refresh">Refresh</button>
             </div>
@@ -91,3 +93,4 @@
 
 </body>
 </html>
+

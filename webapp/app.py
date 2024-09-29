@@ -2,7 +2,7 @@ from flask import Flask, session, render_template, redirect
 from flask_session import Session
 import time
 import requests
-
+from functions import get_top_recommendations
 
 app = Flask(__name__)
 app.secret_key = 'bebra'
@@ -16,7 +16,7 @@ def get_latest_id():
     return str(time.time())
 
 def add_user(id):
-    requests.post("http://backend:8000/users/new_user", params=id)
+    requests.post("http://backend:5051/users/new_user", params={"data": id})
 
 @app.route("/")
 def startpage():
@@ -25,12 +25,18 @@ def startpage():
         print("got")
         add_user(id)
         session["id"] = id
-
+    data = get_top_recommendations(session["id"])
     names = []
-
+    ids = []
     descriptions = []
     categories = []
-    return render_template("recomendation.html", names = names, descriptions = descriptions, categories = categories)
+    for video in data:
+        ids.append(video['video_id'])
+        names.append(video["title"])
+        descriptions.append(video["description"])
+        categories.append(video["category_id"])
+    return render_template("recomendation.html", names = names, ids= ids, descriptions = descriptions, categories = categories)
+    
 
 @app.route("/video/{id}")
 def video(id):
@@ -40,4 +46,4 @@ def video(id):
     return render_template("single_video.html", name = name, description = description, category = category)
 
 if __name__ == "__main__":
-    app.run(host="webapp", port=5555)
+    app.run(host="webapp", port=8000)
