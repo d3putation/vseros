@@ -1,3 +1,4 @@
+
 import pandas as pd
 import torch
 import torch.nn as nn
@@ -217,3 +218,71 @@ def get_recommendation(user_id, current_video_id=None, reaction=None):
                 return None  # No available videos
 
     return random_video_id
+
+
+def get_top_recommendations(user_id, current_video_id=None, reaction=None, num_recommendations=10):
+    """
+    Get a list of recommended video dictionaries based on user feedback.
+
+    Parameters:
+    - user_id (str): The ID of the user.
+    - current_video_id (str, optional): The ID of the current video.
+    - reaction (str, optional): The user's reaction to the current video ('like', 'dislike').
+    - num_recommendations (int, optional): Number of unique recommendations needed.
+
+    Returns:
+    - list: A list of dictionaries with information about the recommended videos.
+    """
+    # Load the user data or initialize it if not found
+    user_data = load_user_data(user_id)
+
+    # Update user data based on the reaction to the current video
+    if reaction == "like" and current_video_id:
+        user_data["liked_videos"].append(current_video_id)
+        video_info = video_data[video_data['video_id'] == current_video_id].iloc[0]
+        user_data["favorite_category"] = video_info['category_id']
+    elif reaction == "dislike" and current_video_id:
+        video_info = video_data[video_data['video_id'] == current_video_id].iloc[0]
+        user_data["disliked_categories"].add(video_info['category_id'])
+
+    # Save updated user data
+    save_user_data(user_id, user_data)
+
+    recommended_videos = set()  # Using a set to ensure uniqueness
+    video_details = []  # List to store details of recommended videos
+
+    # If the user has liked videos, use the recommendation model
+    if user_data["liked_videos"]:
+        while len(recommended_videos) < num_recommendations:
+            recommended_video_id = recommend_video(user_data["liked_videos"])
+            video_info = video_data[video_data['video_id'] == recommended_video_id].iloc[0]
+
+            # Check if the recommended video is in disliked categories
+            if video_info['category_id'] not in user_data["disliked_categories"]:
+                recommended_videos.add(recommended_video_id)
+                video_details.append({
+                    'video_id': video_info['video_id'],
+                    'title': video_info['title'],
+                    'description': video_info['description'],
+                    'category_id': video_info['category_id']
+                })
+
+    # Fill with random videos if not enough recommendations or for new users
+    while len(recommended_videos) < num_recommendations:
+        random_video_id = random.choice(video_data['video_id'].tolist())
+        video_info = video_data[video_data['video_id'] == random_video_id].iloc[0]
+
+        # Exclude videos from disliked categories
+        if video_info['category_id'] not in user_data["disliked_categories"]:
+            recommended_videos.add(random_video_id)
+            video_details.append({
+                'video_id': video_info['video_id'],
+                'title': video_info['title'],
+                'description': video_info['description'],
+                'category_id': video_info['category_id']
+            })
+
+    # Limit the result to the required number of recommendations
+    return video_details[:num_recommendations]
+
+

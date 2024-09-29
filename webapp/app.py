@@ -26,11 +26,12 @@ def startpage():
         add_user(id)
         session["id"] = id
     data = get_recommendation(session["id"])
-    names = [res["name"] for res in data]
+    names = [res["title"] for res in data]
 
-    descriptions = [res["descriptions"] for res in data]
-    categories = [res["categories"] for res in data]
+    descriptions = [res["description"] for res in data]
+    categories = [res["category_id"] for res in data]
     return render_template("recomendation.html", names = names, descriptions = descriptions, categories = categories)
+    
 
 @app.route("/video/{id}")
 def video(id):

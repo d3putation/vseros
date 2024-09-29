@@ -27,7 +27,14 @@
 
         <div class="content">
             <div class="rec">
+                {%for i in range(10)%}
                 <div class="video">
+                    <p class="name">names[i]</p>
+                    <p class="description">descriptions[i]</p>
+                    <p class="author">category[i]</p>
+                </div>
+                {%endfor%}
+                <!-- <div class="video">
                     <p class="name">Название</p>
                     <p class="description">Описание</p>
                     <p class="author">Автор</p>
@@ -71,12 +78,7 @@
                     <p class="name">Название</p>
                     <p class="description">Описание</p>
                     <p class="author">Автор</p>
-                </div>
-                <div class="video">
-                    <p class="name">Название</p>
-                    <p class="description">Описание</p>
-                    <p class="author">Автор</p>
-                </div>
+                </div> -->
 
             </div>            
 
