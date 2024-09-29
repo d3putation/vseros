@@ -14,7 +14,7 @@
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  padding: 2% 1% 4%;
+  padding: 2% 3%;
   background-color: #1b232b;
   text-align: center;
 }
@@ -27,7 +27,7 @@
 .logo {
   display: inline-block;
   vertical-align: top;
-  width: 20%; 
+  width: 25vw; 
   top: 5px;
   left: 20px;
 }
@@ -35,9 +35,10 @@
 .header h1 {
   display: inline-block;
   margin: 10px 0;
-  /* font-family: 'Alumni Sans', sans serif; */
+  max-width: 60vw;
   transform: translateY(-5%);
-  font-size: 2.5rem;
+  font-size: 2rem;
+  font-weight: 700;
   color: #ffffff;
 }
 /* Основная разметка блока с контентом */
@@ -48,8 +49,6 @@
   flex-wrap: wrap;  
   padding: 2% 0 4%; 
   width: 100%;
-  min-height: 100%;
-  /* min-height: 77.6vh; */
   background-color: #14191f;
   border-radius: 20px;
 }
@@ -59,34 +58,38 @@
   flex-flow: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-content: space-around;
+  align-content: space-between;
   flex: 1;
   margin-bottom: 2rem;
-  padding: 2% 0 0;
   width: 100%;
-  height: 60%;
+  min-height: 100%;
+  height: 1px;
   background-color: #14191f;
   border-radius: 20px;
 }
 /* Настройка самих видео */
 .video {
   margin: 1rem 2rem;
-  font-family: 'Alumni Sans', sans serif;;
-  width: 500px;
-  flex-grow: 1;
-  width: calc(100% / 5);
+  font-family: 'Alumni Sans', sans serif;
+  font-size: 1rem;
+  padding: 1rem;
+  width: calc(100% / 4 - 4rem);
+  height: 9rem;
   background-color: #fff;
+  border-radius: 10px;
 }
 /* Настройка кнопки обновления рекомендаций */
 .refresh {
-  width: 10rem;
+  width: 9rem;
   height: 3rem;
+  text-align: center;
   font-size: 2rem;
   color: #fff;
   background-color: #00a1e7;
   border: none;
   border-radius: 10px;
 }
+/* Свечение кнопки при наведение */
 .refresh:hover {
   z-index: 999;
   box-shadow: 0 0 7px 4px rgba(0, 161, 231, 0.5);
