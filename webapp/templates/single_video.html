@@ -5,47 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/bootstrap.css">
     <link rel="stylesheet" href="../static/css/single_video_style.css">
+    <link rel="stylesheet" href="../static/css/single_video_media_style.css">
     <script src="../static/js/jquery-3.7.1.js"></script>
-    <script src="../static/js/main.js"></script>
+    <script src="../static/js/single_video_main.js"></script>
     <title>Cold start</title>
 </head>
 <body>
 
     <!-- Весь экран -->
-    <main class="main">
-        <!-- Логотип -->
-        
+    <main class="main">         
         <!-- Хедер сайта -->
         <div class="header">
+            <!-- Логотип -->
             <div class="logo">
                 <img src="../static/img/rutube_logo.png" width="100%" alt="Логотип rutube">
             </div>
         </div>
         <!-- Блок со всем контентом -->
+        <div class="main-content">
+            <!-- Вложеный блок с контентом -->
         <div class="content">
             <!-- Видео -->
             <div class="video">
                 Название
             </div>
-            <!-- Автор и оценка --> 
-            <div class="author-and-grade">
-                <!-- Автор -->
-                <div class="author">
-                    Автор
+            <!-- Категория и оценка --> 
+            <div class="category-and-grade">
+                <!-- Категория -->
+                <div class="category">
+                    Категория
                 </div>
                 <!-- Оценка -->
                 <div class="grade">
-                    Оценка
+                    <img class="like" src="../static/img/like.png" alt="like">
+                    <img class="dislike" src="../static/img/dislike.png" alt="dislike">
                 </div>
             </div>
+            <!-- Описание -->
             <div class="description">
                 Описание
             </div>
-            <!-- Комментарии -->
-            <div class="comments">
-                <textarea class="comment" name="" id=""></textarea>
-            </div>
 
+        </div>
         </div>
 
     </main>
