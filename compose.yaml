@@ -18,7 +18,7 @@ services:
       BACKEND_PORT: ${BACKEND_PORT}
       
     ports:
-      - ${BACKEND_PORT}:${BACKEND_PORT}
+      - 5051:5051
     depends_on:
       db:
         condition: service_healthy
@@ -56,6 +56,18 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  webapp:
+    container_name: webapp
+    hostname: webapp
+    image: webapp:1.0.0
+    restart: on-failure
+    build:
+      context: ./webapp
+      dockerfile: webapp.dockerfile
+    ports:
+      - 8000:8000
+    
 
 
 volumes:

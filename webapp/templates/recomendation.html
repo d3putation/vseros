@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../static/css/recomendation_style.css">
     <link rel="stylesheet" href="../static/css/recomendation_media_style.css">
     <script src="../static/js/jquery-3.7.1.js"></script>
-    <script src="{{ url_for('static',filename='js/recomendation_main.js') }}"></script>
+    <!-- <script src="{{ url_for('static',filename='js/recomendation_main.js') }}"></script> -->
     
     <title>Cold start</title>
 </head>
@@ -17,7 +17,7 @@
         <div class="header">
             <!-- Логотип -->
             <div class="logo">
-                <img src="../static/img/rutube_logo.png" width="100%" alt="Логотип rutube">
+                <a href= "/"><img src="../static/img/rutube_logo.png" width="100%" alt="Логотип rutube"></a>
             </div>
             <!-- Огловление страницы -->
             <h1>Рекомендательная система для новых пользователей<br>Добро пожаловать!</h1>
@@ -27,63 +27,18 @@
             <!-- Блок с рекомендуемыми видео -->
             <div class="rec">
                 
-                {%for i in range 10%}
-                <div class="video" id="{{ids[i]}}">
-                    <p class="name">{{names[i]}}</p>
-                    <p class="category">{{categories[i]}}</p>
-                    <p class="description">{{descriptions[i]}}</p>
+                {% for i in range(10) %}
+                <div class="video" id="{{ ids[i] }}" onclick="redirectToVideo('{{ ids[i] }}')">
+                    <p class="name">{{ names[i] }}</p>
+                    <p class="category">{{ categories[i] }}</p>
+                    <p class="description">{{ descriptions[i] }}</p>
                 </div>
-                {%endfor%}
-                <!-- <div class="video vid1" id="#">
-                    <p class="name">Название</p>
-                    <p class="category">Категория</p>
-                    <p class="description">Описание</p>
-                </div>
-                <div class="video vid2" id="#">
-                    <p class="name">Название</p>
-                    <p class="category">Категория</p>
-                    <p class="description">Описание</p>
-                </div>
-                <div class="video vid3" id="#">
-                    <p class="name">Название</p>
-                    <p class="category">Категория</p>
-                    <p class="description">Описание</p>
-                </div>
-                <div class="video vid4" id="#">
-                    <p class="name">Название</p>
-                    <p class="category">Категория</p>
-                    <p class="description">Описание</p>
-                </div>
-                <div class="video vid5" id="#">
-                    <p class="name">Название</p>
-                    <p class="category">Категория</p>
-                    <p class="description">Описание</p>
-                </div>
-                <div class="video vid6" id="#">
-                    <p class="name">Название</p>
-                    <p class="category">Категория</p>
-                    <p class="description">Описание</p>
-                </div>
-                <div class="video vid7" id="#">
-                    <p class="name">Название</p>
-                    <p class="category">Категория</p>
-                    <p class="description">Описание</p>
-                </div>
-                <div class="video vid8" id="#">
-                    <p class="name">Название</p>
-                    <p class="category">Категория</p>
-                    <p class="description">Описание</p>
-                </div>
-                <div class="video vid9" id="#">
-                    <p class="name">Название</p>
-                    <p class="category">Категория</p>
-                    <p class="description">Описание</p>
-                </div> -->
-
+                {% endfor %}
+                
             </div>            
             <!-- Кнопка обновления рекомендаций -->
             <div class="refresh-btn">
-                <button class="refresh">Refresh</button>
+                <a href = "/" class="refresh">Refresh</a>
             </div>
 
         </div>
@@ -93,4 +48,15 @@
 
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+    // Function to handle redirection
+    window.redirectToVideo = function (id) {
+        // Store the video ID in local storage (if needed)
+        localStorage.setItem("videoId", id);
 
+        // Redirect to the video page using the video ID
+        document.location.href = `/video/${id}`;
+    };
+});
+</script>

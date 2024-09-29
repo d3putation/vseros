@@ -27,9 +27,6 @@ $(document).ready(function(){
             last_grade = 0;
         };
     });
-    $('.logo').on('click', function(){
-        document.location.href = "../templates/recomendation.html";
-    });
 });
 let at = localStorage.getItem("at");
 console.log(at);

@@ -18,7 +18,7 @@
         <div class="header">
             <!-- Логотип -->
             <div class="logo">
-                <img src="../static/img/rutube_logo.png" width="100%" alt="Логотип rutube">
+                <a href="/"><img src="../static/img/rutube_logo.png" width="100%" alt="Логотип rutube"></a>
             </div>
         </div>
         <!-- Блок со всем контентом -->
@@ -27,23 +27,23 @@
         <div class="content">
             <!-- Видео -->
             <div class="video">
-                Название
+                {{name}}
             </div>
             <!-- Категория и оценка --> 
             <div class="category-and-grade">
                 <!-- Категория -->
                 <div class="category">
-                    Категория
+                    {{category}}
                 </div>
                 <!-- Оценка -->
                 <div class="grade">
-                    <img class="like" src="../static/img/like.png" alt="like">
-                    <img class="dislike" src="../static/img/dislike.png" alt="dislike">
+                    <img id="like-button" class="like" src="../static/img/like.png" alt="like">
+                    <img id="dislike-button" class="dislike" src="../static/img/dislike.png" alt="dislike">                    
                 </div>
             </div>
             <!-- Описание -->
             <div class="description">
-                Описание
+                {{description}}
             </div>
 
         </div>
@@ -54,3 +54,31 @@
 
 </body>
 </html>
+
+<script>
+    document.getElementById('like-button').addEventListener('click', function () {
+    sendPostRequest('like');
+});
+
+document.getElementById('dislike-button').addEventListener('click', function () {
+    sendPostRequest('dislike');
+});
+
+function sendPostRequest(action) {
+    fetch('/update_pref/{{video_id}}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action: action }), // Отправляем данные, например 'like' или 'dislike'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+</script>

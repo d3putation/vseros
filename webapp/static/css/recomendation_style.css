@@ -61,7 +61,7 @@
   align-content: space-between;
   flex: 1;
   margin-bottom: 2rem;
-  width: 100%;
+  width: 100%;  
   min-height: 100%;
   height: 1px;
   background-color: #14191f;
@@ -69,20 +69,28 @@
 }
 /* Настройка самих видео */
 .video {
+  flex-grow: 1;
   margin: 1rem 2rem;
   font-family: 'Alumni Sans', sans serif;
   font-size: 1rem;
   padding: 5px;
-  width: calc(100% / 4 - 4rem);
-  height: 9rem;
+  min-width: calc(100% / 4 - 4rem);
+  width: auto;
+  height: auto;
   background-color: #fff;
   border-radius: 10px;
+}
+/* Изменение шрифта названия видео */
+.video .name {
+  font-weight: 700;
+  font-size: 1.4rem;
 }
 /* Настройка кнопки обновления рекомендаций */
 .refresh {
   width: 9rem;
   height: 3rem;
   text-align: center;
+  text-decoration: none;
   font-size: 2rem;
   color: #fff;
   background-color: #00a1e7;
